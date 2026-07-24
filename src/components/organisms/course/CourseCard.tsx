@@ -16,6 +16,16 @@ interface CourseCardProps {
 
 function CourseImage({ course }: { course: Course }) {
   const [error, setError] = useState(false)
+  if (course.preset_image) {
+    return (
+      <ImageLightbox
+        src={`/courses_images/${course.preset_image}.png`}
+        alt={course.title}
+        className="w-100 rounded-top"
+        style={{ height: 140, objectFit: 'cover' }}
+      />
+    )
+  }
   if (!course.image_url || error) {
     return (
       <ImageLightbox

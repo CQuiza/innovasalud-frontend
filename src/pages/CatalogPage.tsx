@@ -68,7 +68,14 @@ export default function CatalogPage() {
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {published.map((course) => (
               <div key={course.id} className="group rounded-xl border border-neutral-200 bg-white transition-shadow hover:shadow-md overflow-hidden">
-                {course.image_url ? (
+                {course.preset_image ? (
+                  <ImageLightbox
+                    src={`/courses_images/${course.preset_image}.png`}
+                    alt={course.title}
+                    className="w-100"
+                    style={{ height: 160, objectFit: 'cover' }}
+                  />
+                ) : course.image_url ? (
                   <ImageLightbox
                     src={`${config.apiUrl}/courses/${course.id}/image`}
                     alt={course.title}

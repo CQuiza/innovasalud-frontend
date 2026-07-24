@@ -6,6 +6,7 @@ export interface CourseCreate {
   certificate_type_id?: number | null
   teacher_id?: number | null
   status?: CourseStatus
+  preset_image?: string | null
 }
 
 export interface CourseUpdate {
@@ -14,6 +15,7 @@ export interface CourseUpdate {
   certificate_type_id?: number | null
   teacher_id?: number | null
   status?: CourseStatus
+  preset_image?: string | null
 }
 
 export interface Course {
@@ -22,6 +24,7 @@ export interface Course {
   description: string | null
   certificate_type_id: number | null
   teacher_id: number | null
+  preset_image: string | null
   image_url: string | null
   created_at: string
   updated_at: string
@@ -32,6 +35,7 @@ export interface CoursePublic {
   id: number
   title: string
   description: string | null
+  preset_image: string | null
   image_url: string | null
   status: CourseStatus
 }

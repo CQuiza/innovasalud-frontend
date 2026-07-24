@@ -45,7 +45,14 @@ export default function CourseDetailPage() {
       <div className="row g-4">
         <div className="col-12 col-xl-4 order-xl-2">
           <div className="rounded-xl border border-neutral-200 bg-white shadow-sm position-sticky" style={{ top: '1rem' }}>
-            {course.image_url ? (
+            {course.preset_image ? (
+              <ImageLightbox
+                src={`/courses_images/${course.preset_image}.png`}
+                alt={course.title}
+                className="w-100 rounded-top"
+                style={{ height: 160, objectFit: 'cover' }}
+              />
+            ) : course.image_url ? (
               <ImageLightbox
                 src={`${config.apiUrl}/courses/${course.id}/image`}
                 alt={course.title}

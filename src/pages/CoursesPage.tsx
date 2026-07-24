@@ -59,13 +59,16 @@ export default function CoursesPage() {
   function openCreate() { setEditing(null); setModalOpen(true) }
   function openEdit(c: Course) { setEditing(c); setModalOpen(true) }
 
-  async function handleSubmit(data: { title: string; description: string; status: string; teacher_id: number; certificate_type_id: number; imageFile: File | null }) {
-    const payload = {
+  async function handleSubmit(data: { title: string; description: string; status: string; teacher_id: number; certificate_type_id: number; imageFile: File | null; presetImage: string | null }) {
+    const payload: Record<string, unknown> = {
       title: data.title,
       description: data.description || null,
       status: data.status as Course['status'],
       teacher_id: data.teacher_id || null,
       certificate_type_id: data.certificate_type_id || null,
+    }
+    if (data.presetImage) {
+      payload.preset_image = data.presetImage
     }
     try {
       let course: Course
