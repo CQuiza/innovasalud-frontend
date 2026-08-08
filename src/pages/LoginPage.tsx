@@ -47,7 +47,7 @@ export default function LoginPage() {
         <div className="text-center mb-4">
           <div className="d-flex justify-content-center">
             <Link to="/">
-              <img src="/logo.png" alt="InnovaCenter" className="mw-100" style={{ height: 200 }} />
+              <img src="/logo.png" alt="InnovaSalud" className="mw-100" style={{ height: 200 }} />
             </Link>
           </div>
           <p className="text-muted mt-2 mb-0">Inicia sesión</p>

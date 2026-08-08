@@ -51,7 +51,7 @@ export default function SidebarDrawer({ open, onClose }: SidebarDrawerProps) {
       }`}
     >
       <div className="flex items-center justify-between border-b border-bar-200 bg-bar-500 px-4 py-3">
-        <img src="/logo.png" alt="InnovaCenter" className="h-20 w-auto" />
+        <img src="/logo.png" alt="InnovaSalud" className="h-20 w-auto" />
         <button onClick={onClose} className="rounded-lg p-1.5 text-white hover:bg-bar-400 transition-colors">
           <FaTimes className="h-5 w-5" />
         </button>

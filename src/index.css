@@ -8,33 +8,45 @@
 @theme {
   --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
 
-  /* ── Bar color (green → blue palette for navbars, sidebars, topbars) ── */
-  --color-bar-50: #E8F5D4;
-  --color-bar-100: #D2EEA8;
-  --color-bar-200: #83CA18;
-  --color-bar-300: #4DC286;
-  --color-bar-400: #0EACE4;
-  --color-bar-500: #00A8E9;
-  --color-bar-600: #0079B9;
-  --color-bar-700: #004D89;
-  --color-bar-800: #003C6A;
-  --color-bar-900: #0D2B49;
+  /* ── Bar color (institutional blue/navy palette for navbars, sidebars, topbars) ── */
+  --color-bar-50: #EAF4FB;
+  --color-bar-100: #CFE6F6;
+  --color-bar-200: #A9D4EC;
+  --color-bar-300: #36A9E1;
+  --color-bar-400: #2E8FCE;
+  --color-bar-500: #27348B;
+  --color-bar-600: #1E2970;
+  --color-bar-700: #000066;
+  --color-bar-800: #00004F;
+  --color-bar-900: #00003A;
 
-  /* ── Content color (warm sand - for page backgrounds, sections) ── */
-  --color-content-50: #FAF7F2;
-  --color-content-100: #F2EBDE;
-  --color-content-200: #E3D9C6;
-  --color-content-300: #D4C5A9;
-  --color-content-400: #C1B08E;
-  --color-content-500: #A79872;
-  --color-content-600: #8C7F5E;
-  --color-content-700: #6F644A;
-  --color-content-800: #534A37;
-  --color-content-900: #363025;
+  /* ── Accent color (institutional red for CTAs, highlights) ── */
+  --color-accent-50: #FDEEEE;
+  --color-accent-100: #FAD1D4;
+  --color-accent-200: #F5A3A8;
+  --color-accent-300: #EF6E75;
+  --color-accent-400: #E92A35;
+  --color-accent-500: #E30613;
+  --color-accent-600: #B30611;
+  --color-accent-700: #911221;
+  --color-accent-800: #6B0D18;
+  --color-accent-900: #45080F;
 
-  /* ── Override Bootstrap primary to match bar blue ── */
-  --bs-primary: #00A8E9;
-  --bs-primary-rgb: 0, 168, 233;
+  /* ── Content color (cool neutral harmonizing with institutional palette) ── */
+  --color-content-50: #F7F9FC;
+  --color-content-100: #EEF2F8;
+  --color-content-200: #DCE3EF;
+  --color-content-300: #C3CEDF;
+  --color-content-400: #A5B3CC;
+  --color-content-500: #8494B2;
+  --color-content-600: #647491;
+  --color-content-700: #4B5870;
+  --color-content-800: #353F52;
+  --color-content-900: #222838;
+
+  /* ── Override Bootstrap primary to match institutional indigo ── */
+  --bs-primary: #27348B;
+  --bs-primary-rgb: 39, 52, 139;
 }
 
 body {
@@ -45,25 +57,58 @@ body {
 
 /* Bootstrap overrides */
 .btn-primary {
-  --bs-btn-bg: #00A8E9;
-  --bs-btn-border-color: #00A8E9;
-  --bs-btn-hover-bg: #0079B9;
-  --bs-btn-hover-border-color: #0079B9;
-  --bs-btn-active-bg: #004D89;
-  --bs-btn-active-border-color: #004D89;
+  --bs-btn-bg: #27348B;
+  --bs-btn-border-color: #27348B;
+  --bs-btn-hover-bg: #1E2970;
+  --bs-btn-hover-border-color: #1E2970;
+  --bs-btn-active-bg: #000066;
+  --bs-btn-active-border-color: #000066;
 }
 
-/* Neutralize Bootstrap blue links - use bar color instead */
+/* Neutralize Bootstrap blue links - use institutional color instead */
 a, .btn-link, .nav-link {
-  color: #00A8E9;
+  color: #27348B;
   text-decoration: none;
 }
 a:hover, .btn-link:hover, .nav-link:hover {
-  color: #0079B9;
+  color: #000066;
 }
 a.text-primary {
-  color: #00A8E9 !important;
+  color: #27348B !important;
 }
 .text-primary {
-  color: #00A8E9 !important;
+  color: #27348B !important;
+}
+
+/* ── Dashboard (non-public pages): every button in institutional dark red #911221 ── */
+.dashboard-content .btn:not(.btn-close):not(.bg-transparent),
+.dashboard-content button:not(.btn-close):not(.bg-transparent),
+.modal .btn:not(.btn-close):not(.bg-transparent),
+.modal button:not(.btn-close):not(.bg-transparent) {
+  --bs-btn-bg: #911221;
+  --bs-btn-border-color: #911221;
+  --bs-btn-color: #ffffff;
+  --bs-btn-hover-bg: #7a0f1c;
+  --bs-btn-hover-border-color: #7a0f1c;
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-active-bg: #610b16;
+  --bs-btn-active-border-color: #610b16;
+  --bs-btn-active-color: #ffffff;
+  --bs-btn-disabled-bg: #a85552;
+  --bs-btn-disabled-border-color: #a85552;
+  background-color: #911221;
+  border-color: #911221;
+  color: #ffffff !important;
+}
+.dashboard-content .btn:not(.btn-close):not(.bg-transparent):hover,
+.dashboard-content .btn:not(.btn-close):not(.bg-transparent):focus,
+.dashboard-content button:not(.btn-close):not(.bg-transparent):hover,
+.dashboard-content button:not(.btn-close):not(.bg-transparent):focus,
+.modal .btn:not(.btn-close):not(.bg-transparent):hover,
+.modal .btn:not(.btn-close):not(.bg-transparent):focus,
+.modal button:not(.btn-close):not(.bg-transparent):hover,
+.modal button:not(.btn-close):not(.bg-transparent):focus {
+  background-color: #7a0f1c;
+  border-color: #7a0f1c;
+  color: #ffffff !important;
 }

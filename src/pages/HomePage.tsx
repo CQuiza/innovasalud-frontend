@@ -38,8 +38,8 @@ export default function HomePage() {
       <header className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-neutral-200/30 shadow-sm">
         <nav className="flex justify-between items-center w-full px-4 md:px-10 h-20 max-w-7xl mx-auto">
           <Link to="/" className="flex items-center gap-4">
-            <img src="/logo.png" alt="Innova Center" className="h-30 w-auto" />
-            {/* <span className="text-2xl font-bold text-bar-900">Innova Center</span> */}
+            <img src="/logo.png" alt="InnovaSalud" className="h-27 w-auto" />
+            {/* <span className="text-2xl font-bold text-bar-900">InnovaSalud</span> */}
           </Link>
           <div className="hidden md:flex items-center gap-8">
             <Link to="/search" className="text-sm font-medium tracking-wide text-neutral-600 hover:text-bar-900 transition-colors">Verificar certificado</Link>
@@ -250,7 +250,7 @@ export default function HomePage() {
         <section className="bg-bar-900 py-20 text-white">
           <div className="max-w-7xl mx-auto px-4 md:px-10">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-semibold tracking-tight">¿Por qué elegir Innova Center?</h2>
+              <h2 className="text-3xl font-semibold tracking-tight">¿Por qué elegir InnovaSalud?</h2>
               <p className="text-base text-white/60 mt-4">Formación virtual diseñada para impulsar tu crecimiento profesional con calidad, flexibilidad y confianza.</p>
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-5 gap-8">
@@ -404,10 +404,10 @@ export default function HomePage() {
         <div className="flex flex-col md:flex-row justify-between items-center w-full px-4 md:px-10 max-w-7xl mx-auto gap-4">
           <div className="flex flex-col items-center md:items-start gap-4">
             <div className="flex items-center gap-3">
-              <img src="/logovector.svg" alt="Innova Center" className="h-10 w-auto brightness-0 invert" />
-              <span className="text-2xl font-black text-white">Innova Center</span>
+              <img src="/logovector.svg" alt="InnovaSalud" className="h-10 w-auto brightness-0 invert" />
+              <span className="text-2xl font-black text-white">InnovaSalud</span>
             </div>
-            <p className="text-base text-white/70 text-center md:text-left">© 2024 Innova Center. Transformando la educación en salud.</p>
+            <p className="text-base text-white/70 text-center md:text-left">© 2024 InnovaSalud. Transformando la educación en salud.</p>
           </div>
           <div className="flex flex-wrap justify-center gap-8">
             <Link to="/privacy" className="text-xs font-semibold tracking-wider text-white/70 hover:text-white hover:underline transition-all">Privacidad</Link>
@@ -419,7 +419,7 @@ export default function HomePage() {
             <button
               onClick={() => {
                 if (navigator.share) {
-                  navigator.share({ title: 'Innova Center', url: window.location.href })
+                  navigator.share({ title: 'InnovaSalud', url: window.location.href })
                 } else {
                   navigator.clipboard.writeText(window.location.href)
                 }

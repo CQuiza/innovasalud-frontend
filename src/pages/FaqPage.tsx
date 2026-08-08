@@ -25,8 +25,8 @@ export default function FaqPage() {
       <header className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-neutral-200/30 shadow-sm">
         <nav className="flex justify-between items-center w-full px-4 md:px-10 h-20 max-w-7xl mx-auto">
           <Link to="/" className="flex items-center gap-4">
-            <img src="/logo.png" alt="Innova Center" className="h-30 w-auto" />
-            {/* <span className="text-2xl font-bold text-bar-900">Innova Center</span> */}
+            <img src="/logo.png" alt="InnovaSalud" className="h-30 w-auto" />
+            {/* <span className="text-2xl font-bold text-bar-900">InnovaSalud</span> */}
           </Link>
           <div className="hidden md:flex items-center gap-8">
             <Link to="/search" className="text-sm font-medium tracking-wide text-neutral-600 hover:text-bar-900 transition-colors">Verificar certificado</Link>
@@ -53,7 +53,7 @@ export default function FaqPage() {
           <div className="col-12 col-lg-8">
             <Link to="/" className="mb-6 d-inline-flex text-sm text-bar-600 hover:text-bar-700 text-decoration-none transition-colors">&larr; Volver al inicio</Link>
             <h1 className="text-3xl fw-bold text-neutral-800">Preguntas Frecuentes</h1>
-            <p className="mt-2 text-neutral-600 text-justify">Respuestas a las dudas más comunes sobre InnovaCenter.</p>
+            <p className="mt-2 text-neutral-600 text-justify">Respuestas a las dudas más comunes sobre InnovaSalud.</p>
 
             <div className="mt-8 space-y-3">
               {faqs.map((faq, i) => {
@@ -79,7 +79,7 @@ export default function FaqPage() {
           </div>
 
           <div className="d-none d-lg-flex col-lg-4 align-items-center justify-content-center">
-            <div className="w-full h-full min-h-[400px] rounded-2xl overflow-hidden shadow-lg" style={{ background: 'linear-gradient(135deg, #00A8E9 0%, #004D89 100%)' }}>
+            <div className="w-full h-full min-h-[400px] rounded-2xl overflow-hidden shadow-lg" style={{ background: 'linear-gradient(135deg, #27348B 0%, #000066 100%)' }}>
               <img
                 src="/faq-bg.jpg"
                 alt="Consultas médicas"

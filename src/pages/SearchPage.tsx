@@ -75,8 +75,8 @@ export default function SearchPage() {
       <header className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-neutral-200/30 shadow-sm">
         <nav className="flex justify-between items-center w-full px-4 md:px-10 h-20 max-w-7xl mx-auto">
           <Link to="/" className="flex items-center gap-4">
-            <img src="/logo.png" alt="Innova Center" className="h-30 w-auto" />
-            {/* <span className="text-2xl font-bold text-bar-900">Innova Center</span> */}
+            <img src="/logo.png" alt="InnovaSalud" className="h-30 w-auto" />
+            {/* <span className="text-2xl font-bold text-bar-900">InnovaSalud</span> */}
           </Link>
           <div className="hidden md:flex items-center gap-8">
             <Link to="/search" className="text-sm font-medium tracking-wide text-neutral-600 hover:text-bar-900 transition-colors">Verificar certificado</Link>

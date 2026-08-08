@@ -11,7 +11,7 @@ export default function DashboardLayout() {
       <Topbar onMenuClick={() => setSidebarOpen(true)} />
       <SidebarDrawer open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      <main className="overflow-y-auto" style={{ minHeight: 'calc(100vh - 64px)' }}>
+      <main className="dashboard-content overflow-y-auto" style={{ minHeight: 'calc(100vh - 64px)' }}>
         <Outlet />
       </main>
 

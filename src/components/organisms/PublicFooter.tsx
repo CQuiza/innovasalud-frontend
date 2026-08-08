@@ -7,10 +7,10 @@ export default function PublicFooter() {
       <div className="flex flex-col md:flex-row justify-between items-center w-full px-4 md:px-10 max-w-7xl mx-auto gap-4">
         <div className="flex flex-col items-center md:items-start gap-4">
           <div className="flex items-center gap-3">
-            <img src="/logovector.svg" alt="Innova Center" className="h-10 w-auto brightness-0 invert" />
-            <span className="text-2xl font-black text-white">Innova Center</span>
+            <img src="/logovector.svg" alt="InnovaSalud" className="h-10 w-auto brightness-0 invert" />
+            <span className="text-2xl font-black text-white">InnovaSalud</span>
           </div>
-          <p className="text-base text-white/70 text-center md:text-left">&copy; {new Date().getFullYear()} Innova Center. Transformando la educación en salud.</p>
+          <p className="text-base text-white/70 text-center md:text-left">&copy; {new Date().getFullYear()} InnovaSalud. Transformando la educación en salud.</p>
         </div>
         <div className="flex flex-wrap justify-center gap-8">
           <Link to="/privacy" className="text-xs font-semibold tracking-wider text-white/70 hover:text-white hover:underline transition-all">Privacidad</Link>
@@ -22,7 +22,7 @@ export default function PublicFooter() {
           <button
             onClick={() => {
               if (navigator.share) {
-                navigator.share({ title: 'Innova Center', url: window.location.href })
+                navigator.share({ title: 'InnovaSalud', url: window.location.href })
               } else {
                 navigator.clipboard.writeText(window.location.href)
               }
