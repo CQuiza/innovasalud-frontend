@@ -1,10 +1,11 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useCallback } from 'react'
 import { toast } from 'sonner'
 import { Form } from 'react-bootstrap'
 import { useAuth } from '../context/AuthContext'
 import { useCertifiedUsers, useUsers } from '../hooks/useUsers'
 import { useCertificates, useUpdateCertificate, useIssueCertificate } from '../hooks/useCertificates'
 import { useCertificateTypes } from '../hooks/useCertificateTypes'
+import { userService } from '../services/userService'
 import Card from '../components/molecules/Card'
 import SearchBar from '../components/molecules/SearchBar'
 import SearchableSelect from '../components/molecules/SearchableSelect'
@@ -108,6 +109,10 @@ export default function CertificatesPage() {
   const flatRows = useMemo(() => !isAdmin && plainCerts ? plainCerts.items.map((c) => ({ cert: c })) : [], [isAdmin, plainCerts])
 
   const studentOptions = useMemo(() => (students?.items || []).map((s) => ({ value: s.id, label: `${s.name || ''} ${s.first_last_name || ''}`.trim() || s.email, sublabel: `${s.identity_type} ${s.identity_number} — ${s.email}` })), [students])
+  const searchStudents = useCallback(async (query: string): Promise<{ value: number; label: string; sublabel: string }[]> => {
+    const res = await userService.list({ role: 'student', limit: 50, search: query })
+    return (res.items || []).map((s) => ({ value: s.id, label: `${s.name || ''} ${s.first_last_name || ''}`.trim() || s.email, sublabel: `${s.identity_type} ${s.identity_number} — ${s.email}` }))
+  }, [])
   const certTypeOptions = useMemo(() => (certTypes || []).map((t) => ({
     value: t.id,
     label: t.name,
@@ -234,7 +239,7 @@ export default function CertificatesPage() {
 
       <Modal open={issueModalOpen} onClose={() => setIssueModalOpen(false)} title="Adicionar Nuevo Certificado">
         <form onSubmit={handleIssueSubmit}>
-          <SearchableSelect label="Usuario" options={studentOptions} value={selectedUserId} onChange={setSelectedUserId} placeholder="Buscar estudiante..." required />
+          <SearchableSelect label="Usuario" options={studentOptions} value={selectedUserId} onChange={setSelectedUserId} placeholder="Buscar estudiante..." required onRemoteSearch={searchStudents} />
           <SearchableSelect label="Tipo de certificado" options={certTypeOptions} value={selectedTypeId} onChange={setSelectedTypeId} placeholder="Buscar tipo..." required />
           <Input label="Fecha de emisión (opcional)" type="date" value={issuedAt} onChange={(e) => setIssuedAt(e.target.value)} />
           <Input label="Extensión de vigencia (años, opcional)" type="number" min={1} value={validityExtension ?? ''} onChange={(e) => setValidityExtension(e.target.value ? Number(e.target.value) : null)} />

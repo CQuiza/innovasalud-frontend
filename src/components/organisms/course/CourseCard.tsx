@@ -60,7 +60,7 @@ export default function CourseCard({ course, teacherName, certTypeName, canManag
       >
         <div className="d-flex align-items-start gap-3 mb-3">
           <div className="min-w-0 flex-grow-1">
-            <h3 className="h6 fw-bold text-neutral-800 mb-1 text-truncate">{course.title}</h3>
+            <h3 className="h6 fw-bold text-neutral-800 mb-1">{course.title}</h3>
             {course.description && (
               <p
                 className="small text-muted mb-0"
