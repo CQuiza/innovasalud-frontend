@@ -4,6 +4,11 @@ import type { CertificateBatchIssueRequest, CertificateCreate, CertificateIssueR
 
 const QUERY_KEY = ['certificates']
 
+function invalidateCaches(queryClient: ReturnType<typeof useQueryClient>) {
+  queryClient.invalidateQueries({ queryKey: QUERY_KEY })
+  queryClient.invalidateQueries({ queryKey: ['users'] })
+}
+
 export function useCertificates(params?: Record<string, unknown>, options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: [...QUERY_KEY, params],
@@ -24,7 +29,7 @@ export function useCreateCertificate() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (data: CertificateCreate) => certificateService.create(data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
+    onSuccess: () => invalidateCaches(queryClient),
   })
 }
 
@@ -32,7 +37,7 @@ export function useBatchIssueCertificates() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (data: CertificateBatchIssueRequest) => certificateService.issueBatch(data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
+    onSuccess: () => invalidateCaches(queryClient),
   })
 }
 
@@ -40,7 +45,7 @@ export function useIssueCertificate() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (data: CertificateIssueRequest) => certificateService.issue(data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
+    onSuccess: () => invalidateCaches(queryClient),
   })
 }
 
@@ -48,7 +53,7 @@ export function useUpdateCertificate(id: number) {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (data: CertificateUpdate) => certificateService.update(id, data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
+    onSuccess: () => invalidateCaches(queryClient),
   })
 }
 
@@ -56,7 +61,7 @@ export function useDeleteCertificate() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (id: number) => certificateService.remove(id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
+    onSuccess: () => invalidateCaches(queryClient),
   })
 }
 
