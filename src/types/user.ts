@@ -8,7 +8,7 @@ export interface UserBase {
   role: UserRole
   identity_type: IdentityType
   identity_number: string
-  phone_number: string
+  phone_number?: string
   is_active: boolean
 }
 

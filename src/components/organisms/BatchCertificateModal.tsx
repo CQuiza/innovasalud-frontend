@@ -19,17 +19,27 @@ export default function BatchCertificateModal({ open, onClose, userId, userName,
   const [search, setSearch] = useState('')
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set())
   const [issuedAt, setIssuedAt] = useState('')
+  const [validityExtension, setValidityExtension] = useState<number | null>(null)
   const [showResults, setShowResults] = useState(false)
   const batchIssue = useBatchIssueCertificates()
   const searchRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
+  const [prevOpen, setPrevOpen] = useState(open)
+  if (open !== prevOpen) {
+    setPrevOpen(open)
     if (open) {
       setSearch('')
       setSelectedIds(new Set())
       setIssuedAt('')
+      setValidityExtension(null)
       setShowResults(false)
-      setTimeout(() => searchRef.current?.focus(), 100)
+    }
+  }
+
+  useEffect(() => {
+    if (open) {
+      const t = setTimeout(() => searchRef.current?.focus(), 100)
+      return () => clearTimeout(t)
     }
   }, [open])
 
@@ -73,6 +83,7 @@ export default function BatchCertificateModal({ open, onClose, userId, userName,
         user_id: userId,
         certificate_type_ids: Array.from(selectedIds),
         issued_at: issuedAt || undefined,
+        validity_extension: selectedIds.size === 1 ? (validityExtension ?? undefined) : undefined,
       })
       setShowResults(true)
       const issuedCount = result.issued.length
@@ -157,6 +168,20 @@ export default function BatchCertificateModal({ open, onClose, userId, userName,
           value={issuedAt}
           onChange={(e) => setIssuedAt(e.target.value)}
         />
+
+        <Input
+          label="Extensión de vigencia (años, opcional)"
+          type="number"
+          min={1}
+          value={validityExtension ?? ''}
+          onChange={(e) => setValidityExtension(e.target.value ? Number(e.target.value) : null)}
+          disabled={selectedIds.size !== 1}
+        />
+        {selectedIds.size !== 1 && (
+          <small className="text-muted d-block mb-3">
+            Solo disponible al seleccionar un único tipo de certificado.
+          </small>
+        )}
 
         {showResults && batchIssue.data && (
           <div className="mt-3 p-3 rounded-lg border">

@@ -1,9 +1,8 @@
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import { toast } from 'sonner'
-import { Form } from 'react-bootstrap'
 import { useAuth } from '../context/AuthContext'
 import { useCertifiedUsers, useUsers } from '../hooks/useUsers'
-import { useCertificates, useUpdateCertificate, useIssueCertificate } from '../hooks/useCertificates'
+import { useCertificates, useIssueCertificate } from '../hooks/useCertificates'
 import { useCertificateTypes } from '../hooks/useCertificateTypes'
 import { userService } from '../services/userService'
 import Card from '../components/molecules/Card'
@@ -11,11 +10,13 @@ import SearchBar from '../components/molecules/SearchBar'
 import SearchableSelect from '../components/molecules/SearchableSelect'
 import Pagination from '../components/molecules/Pagination'
 import Modal from '../components/molecules/Modal'
+import RenewCertificateModal from '../components/organisms/RenewCertificateModal'
+import EditCertificateStatusModal from '../components/organisms/EditCertificateStatusModal'
 import Button from '../components/atoms/Button'
 import Badge from '../components/atoms/Badge'
 import Input from '../components/atoms/Input'
 import Skeleton from '../components/atoms/Skeleton'
-import { FaPlus, FaPencilAlt, FaFilePdf, FaQrcode, FaChevronDown, FaChevronRight } from 'react-icons/fa'
+import { FaPlus, FaPencilAlt, FaFilePdf, FaQrcode, FaSyncAlt, FaChevronDown, FaChevronRight } from 'react-icons/fa'
 import { getErrorMessage } from '../lib/error'
 import { formatDate } from '../lib/dates'
 import { certificateStatusVariant } from '../lib/statusVariant'
@@ -41,9 +42,8 @@ export default function CertificatesPage() {
   const [selectedTypeId, setSelectedTypeId] = useState<string | number>('')
   const [issuedAt, setIssuedAt] = useState('')
   const [validityExtension, setValidityExtension] = useState<number | null>(null)
-  const [editModalOpen, setEditModalOpen] = useState(false)
-  const [editingCert, setEditingCert] = useState<Certificate | null>(null)
-  const [editStatus, setEditStatus] = useState('')
+  const [renewCert, setRenewCert] = useState<Certificate | null>(null)
+  const [editCert, setEditCert] = useState<Certificate | null>(null)
 
   useEffect(() => {
     const t = setTimeout(() => {
@@ -69,7 +69,6 @@ export default function CertificatesPage() {
   )
   const { data: certTypes } = useCertificateTypes({ limit: 2000 })
   const issueCert = useIssueCertificate()
-  const updateCert = useUpdateCertificate(editingCert?.id ?? 0)
   const isLoading = isAdmin ? loadingCertified : loadingPlain
 
   const typeMap = useMemo(() => {
@@ -92,13 +91,7 @@ export default function CertificatesPage() {
     setExpandedUsers((prev) => { const n = new Set(prev); if (n.has(userId)) n.delete(userId); else n.add(userId); return n })
   }
 
-  function openEdit(c: Certificate) { setEditingCert(c); setEditStatus(c.status); setEditModalOpen(true) }
-
-  async function handleEditSubmit(e: React.FormEvent) {
-    e.preventDefault(); if (!editingCert) return
-    try { await updateCert.mutateAsync({ status: editStatus as Certificate['status'] }); toast.success('Certificado actualizado correctamente'); setEditModalOpen(false); setEditingCert(null) }
-    catch (err) { toast.error(getErrorMessage(err)) }
-  }
+  function openEdit(c: Certificate) { setEditCert(c) }
 
   async function handleIssueSubmit(e: React.FormEvent) {
     e.preventDefault(); if (!selectedUserId || !selectedTypeId) return
@@ -179,7 +172,8 @@ export default function CertificatesPage() {
                                   <div className="d-flex justify-content-end gap-1">
                                     <button onClick={() => window.open(`${config.apiUrl}/certificates/view/${cert.unique_id}`, '_blank')} className="btn btn-sm btn-outline-secondary"><FaFilePdf /></button>
                                     <button onClick={() => window.open(`${config.apiUrl}/certificates/view/${cert.unique_id}/qr`, '_blank')} className="btn btn-sm btn-outline-secondary"><FaQrcode /></button>
-                                    <button onClick={() => openEdit(cert)} className="btn btn-sm btn-outline-secondary"><FaPencilAlt /></button>
+                                    <button onClick={() => setRenewCert(cert)} disabled={cert.status === 'revoked'} className="btn btn-sm btn-outline-primary" title="Renovar"><FaSyncAlt /></button>
+                                    <button onClick={() => openEdit(cert)} className="btn btn-sm btn-outline-secondary" title="Cambiar estado"><FaPencilAlt /></button>
                                   </div>
                                 </td>
                               </tr>
@@ -250,21 +244,21 @@ export default function CertificatesPage() {
         </form>
       </Modal>
 
-      <Modal open={editModalOpen} onClose={() => setEditModalOpen(false)} title="Actualizar certificado">
-        <form onSubmit={handleEditSubmit}>
-          <Form.Group className="mb-3">
-            <Form.Label className="small fw-medium text-secondary">Estado</Form.Label>
-            <Form.Select value={editStatus} onChange={(e) => setEditStatus(e.target.value)} required>
-              <option value="active">Activo</option>
-              <option value="revoked">Revocado</option>
-            </Form.Select>
-          </Form.Group>
-          <div className="d-flex justify-content-end gap-2">
-            <Button variant="secondary" type="button" onClick={() => setEditModalOpen(false)}>Cancelar</Button>
-            <Button type="submit" loading={updateCert.isPending}>Guardar</Button>
-          </div>
-        </form>
-      </Modal>
+      {renewCert && (
+        <RenewCertificateModal
+          open
+          onClose={() => setRenewCert(null)}
+          certificate={renewCert}
+        />
+      )}
+
+      {editCert && (
+        <EditCertificateStatusModal
+          open
+          onClose={() => setEditCert(null)}
+          certificate={editCert}
+        />
+      )}
     </div>
   )
 }

@@ -25,6 +25,12 @@ export interface CertificateBatchIssueRequest {
   user_id: number
   certificate_type_ids: number[]
   issued_at?: string | null
+  validity_extension?: number | null
+}
+
+export interface CertificateRenewRequest {
+  issued_at?: string | null
+  validity_extension?: number | null
 }
 
 export interface CertificateBatchIssueResult {

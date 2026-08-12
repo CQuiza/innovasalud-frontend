@@ -30,12 +30,14 @@ export default function SearchableSelect({
   const [search, setSearch] = useState('')
   const [remoteOptions, setRemoteOptions] = useState<Option[] | null>(null)
   const [searching, setSearching] = useState(false)
+  const [chosen, setChosen] = useState<Option | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const searchSeq = useRef(0)
   const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const selected = options.find((o) => o.value === value)
+  const selected = options.find((o) => o.value === value) ??
+    (chosen && chosen.value === value ? chosen : undefined)
 
   function resetSearch() {
     if (searchTimer.current) clearTimeout(searchTimer.current)
@@ -154,7 +156,7 @@ export default function SearchableSelect({
                   return (
                     <div
                       key={String(opt.value)}
-                      onClick={() => { onChange(opt.value); setOpen(false); resetSearch() }}
+                      onClick={() => { setChosen(opt); onChange(opt.value); setOpen(false); resetSearch() }}
                       className={`flex cursor-pointer items-center justify-between px-3 py-2 text-sm transition-colors ${
                         active ? 'bg-primary-50 text-primary-700' : 'text-neutral-700 hover:bg-neutral-50'
                       }`}

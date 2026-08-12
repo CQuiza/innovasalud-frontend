@@ -1,5 +1,5 @@
 import api from './api'
-import type { Certificate, CertificateCreate, CertificateIssueRequest, CertificateUpdate, CertificateBatchIssueRequest, CertificateBatchIssueResult, CertificateListResponse } from '../types'
+import type { Certificate, CertificateCreate, CertificateIssueRequest, CertificateUpdate, CertificateBatchIssueRequest, CertificateBatchIssueResult, CertificateListResponse, CertificateRenewRequest } from '../types'
 
 export const certificateService = {
   list: async (params?: Record<string, unknown>): Promise<CertificateListResponse> => {
@@ -29,6 +29,11 @@ export const certificateService = {
 
   update: async (id: number, payload: CertificateUpdate): Promise<Certificate> => {
     const { data } = await api.patch<Certificate>(`/certificates/${id}`, payload)
+    return data
+  },
+
+  renew: async (id: number, payload: CertificateRenewRequest): Promise<Certificate> => {
+    const { data } = await api.post<Certificate>(`/certificates/${id}/renew`, payload)
     return data
   },
 
