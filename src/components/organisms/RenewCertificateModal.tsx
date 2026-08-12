@@ -16,6 +16,7 @@ interface Props {
 export default function RenewCertificateModal({ open, onClose, certificate }: Props) {
   const [issuedAt, setIssuedAt] = useState('')
   const [validityExtension, setValidityExtension] = useState<number | null>(null)
+  const [hours, setHours] = useState<number | null>(null)
   const renew = useRenewCertificate(certificate.id)
 
   const [prevOpen, setPrevOpen] = useState(open)
@@ -24,6 +25,7 @@ export default function RenewCertificateModal({ open, onClose, certificate }: Pr
     if (open) {
       setIssuedAt('')
       setValidityExtension(null)
+      setHours(null)
     }
   }
 
@@ -33,6 +35,7 @@ export default function RenewCertificateModal({ open, onClose, certificate }: Pr
       await renew.mutateAsync({
         issued_at: issuedAt || undefined,
         validity_extension: validityExtension ?? undefined,
+        hours: hours ?? undefined,
       })
       toast.success('Certificado renovado correctamente')
       onClose()
@@ -59,6 +62,13 @@ export default function RenewCertificateModal({ open, onClose, certificate }: Pr
           min={1}
           value={validityExtension ?? ''}
           onChange={(e) => setValidityExtension(e.target.value ? Number(e.target.value) : null)}
+        />
+        <Input
+          label="Número de horas (opcional)"
+          type="number"
+          min={1}
+          value={hours ?? ''}
+          onChange={(e) => setHours(e.target.value ? Number(e.target.value) : null)}
         />
         <div className="d-flex justify-content-end gap-2 pt-2">
           <Button variant="secondary" type="button" onClick={onClose}>Cancelar</Button>

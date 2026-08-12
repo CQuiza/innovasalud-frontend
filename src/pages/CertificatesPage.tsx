@@ -42,6 +42,7 @@ export default function CertificatesPage() {
   const [selectedTypeId, setSelectedTypeId] = useState<string | number>('')
   const [issuedAt, setIssuedAt] = useState('')
   const [validityExtension, setValidityExtension] = useState<number | null>(null)
+  const [hours, setHours] = useState<number | null>(null)
   const [renewCert, setRenewCert] = useState<Certificate | null>(null)
   const [editCert, setEditCert] = useState<Certificate | null>(null)
 
@@ -95,7 +96,7 @@ export default function CertificatesPage() {
 
   async function handleIssueSubmit(e: React.FormEvent) {
     e.preventDefault(); if (!selectedUserId || !selectedTypeId) return
-    try { await issueCert.mutateAsync({ user_id: Number(selectedUserId), certificate_type_id: Number(selectedTypeId), issued_at: issuedAt || undefined, validity_extension: validityExtension ?? undefined }); toast.success('Certificado emitido correctamente'); setIssueModalOpen(false); setSelectedUserId(''); setSelectedTypeId(''); setIssuedAt(''); setValidityExtension(null) }
+    try { await issueCert.mutateAsync({ user_id: Number(selectedUserId), certificate_type_id: Number(selectedTypeId), issued_at: issuedAt || undefined, validity_extension: validityExtension ?? undefined, hours: hours ?? undefined }); toast.success('Certificado emitido correctamente'); setIssueModalOpen(false); setSelectedUserId(''); setSelectedTypeId(''); setIssuedAt(''); setValidityExtension(null); setHours(null) }
     catch (err) { toast.error(getErrorMessage(err)) }
   }
 
@@ -237,6 +238,7 @@ export default function CertificatesPage() {
           <SearchableSelect label="Tipo de certificado" options={certTypeOptions} value={selectedTypeId} onChange={setSelectedTypeId} placeholder="Buscar tipo..." required />
           <Input label="Fecha de emisión (opcional)" type="date" value={issuedAt} onChange={(e) => setIssuedAt(e.target.value)} />
           <Input label="Extensión de vigencia (años, opcional)" type="number" min={1} value={validityExtension ?? ''} onChange={(e) => setValidityExtension(e.target.value ? Number(e.target.value) : null)} />
+          <Input label="Número de horas (opcional)" type="number" min={1} value={hours ?? ''} onChange={(e) => setHours(e.target.value ? Number(e.target.value) : null)} />
           <div className="d-flex justify-content-end gap-2 pt-2">
             <Button variant="secondary" type="button" onClick={() => setIssueModalOpen(false)}>Cancelar</Button>
             <Button type="submit" loading={issueCert.isPending}>Emitir certificado</Button>
