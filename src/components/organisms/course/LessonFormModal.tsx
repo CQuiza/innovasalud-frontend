@@ -2,7 +2,10 @@ import { useState } from 'react'
 import Modal from '../../molecules/Modal'
 import Input from '../../atoms/Input'
 import Button from '../../atoms/Button'
+import FileDropzone from '../../molecules/FileDropzone'
 import LessonFileManager from './LessonFileManager'
+import { FaTimes, FaFileAlt } from 'react-icons/fa'
+import { formatFileSize } from '../../../lib/lessonFiles'
 import type { Lesson } from '../../../types'
 
 interface LessonForm {
@@ -20,7 +23,7 @@ interface LessonFormModalProps {
   open: boolean
   editing: Lesson | null
   loading: boolean
-  onSubmit: (data: LessonForm) => Promise<void>
+  onSubmit: (data: LessonForm, files?: File[]) => Promise<void>
   onClose: () => void
   lessonId?: number
 }
@@ -36,11 +39,17 @@ export default function LessonFormModal({ open, editing, loading, onSubmit, onCl
       order_index: editing.order_index,
     } : emptyForm
   )
+  const [pendingFiles, setPendingFiles] = useState<File[]>([])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    await onSubmit(form)
+    await onSubmit(form, pendingFiles)
     setForm(emptyForm)
+    setPendingFiles([])
+  }
+
+  function removePendingFile(index: number) {
+    setPendingFiles((prev) => prev.filter((_, i) => i !== index))
   }
 
   return (
@@ -54,6 +63,30 @@ export default function LessonFormModal({ open, editing, loading, onSubmit, onCl
         <Input label="URL de video (opcional)" value={form.video_content_url} onChange={(e) => setForm({ ...form, video_content_url: e.target.value })} />
         <Input label="URL de archivo (opcional)" value={form.file_content_url} onChange={(e) => setForm({ ...form, file_content_url: e.target.value })} />
         <Input label="Orden" type="number" min={0} value={form.order_index} onChange={(e) => setForm({ ...form, order_index: Number(e.target.value) })} required />
+        {!editing && (
+          <div className="mb-3">
+            <label className="form-label small fw-medium text-secondary">
+              Archivos {pendingFiles.length > 0 && <span className="text-bar-500">({pendingFiles.length})</span>}
+            </label>
+            <FileDropzone multiple disabled={loading} onFiles={(files) => setPendingFiles((prev) => [...prev, ...files])} />
+            {pendingFiles.length > 0 && (
+              <div className="mt-2 d-flex flex-column gap-1">
+                {pendingFiles.map((file, i) => (
+                  <div key={`${file.name}-${i}`} className="d-flex align-items-center justify-content-between rounded border px-3 py-2">
+                    <div className="d-flex align-items-center gap-2 min-w-0">
+                      <FaFileAlt className="text-bar-500 flex-shrink-0" />
+                      <span className="small text-truncate">{file.name}</span>
+                      <span className="small text-muted">({formatFileSize(file.size)})</span>
+                    </div>
+                    <button type="button" onClick={() => removePendingFile(i)} className="btn btn-sm btn-outline-danger" title="Quitar archivo" disabled={loading}>
+                      <FaTimes />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
         {lessonId && lessonId > 0 && (
           <div className="mb-3 pt-2 border-top">
             <LessonFileManager lessonId={lessonId} />

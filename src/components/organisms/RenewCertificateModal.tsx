@@ -48,7 +48,7 @@ export default function RenewCertificateModal({ open, onClose, certificate }: Pr
     <Modal open={open} onClose={onClose} title="Renovar certificado">
       <form onSubmit={handleSubmit}>
         <p className="small text-muted mb-3">
-          El certificado actual será revocado y se emitirá uno nuevo con los mismos datos.
+          El certificado será renovado con las fechas y datos indicados. Mantiene su numeración y sigue vigente (no se revoca).
         </p>
         <Input
           label="Fecha de emisión (opcional)"

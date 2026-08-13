@@ -40,7 +40,10 @@ export function useUpdateUser(id: number) {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (data: UserUpdate) => userService.update(id, data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: QUERY_KEY }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY })
+      queryClient.invalidateQueries({ queryKey: ['certificates'] })
+    },
   })
 }
 
