@@ -18,7 +18,7 @@ import Input from '../components/atoms/Input'
 import Skeleton from '../components/atoms/Skeleton'
 import { FaPlus, FaPencilAlt, FaFilePdf, FaQrcode, FaSyncAlt, FaChevronDown, FaChevronRight } from 'react-icons/fa'
 import { getErrorMessage } from '../lib/error'
-import { formatDate } from '../lib/dates'
+import { formatDate, toLocalIsoDate } from '../lib/dates'
 import { certificateStatusVariant } from '../lib/statusVariant'
 import { config } from '../config'
 import type { Certificate } from '../types'
@@ -96,7 +96,7 @@ export default function CertificatesPage() {
 
   async function handleIssueSubmit(e: React.FormEvent) {
     e.preventDefault(); if (!selectedUserId || !selectedTypeId) return
-    try { await issueCert.mutateAsync({ user_id: Number(selectedUserId), certificate_type_id: Number(selectedTypeId), issued_at: issuedAt || undefined, validity_extension: validityExtension ?? undefined, hours: hours ?? undefined }); toast.success('Certificado emitido correctamente'); setIssueModalOpen(false); setSelectedUserId(''); setSelectedTypeId(''); setIssuedAt(''); setValidityExtension(null); setHours(null) }
+    try { await issueCert.mutateAsync({ user_id: Number(selectedUserId), certificate_type_id: Number(selectedTypeId), issued_at: issuedAt ? toLocalIsoDate(issuedAt) : undefined, validity_extension: validityExtension ?? undefined, hours: hours ?? undefined }); toast.success('Certificado emitido correctamente'); setIssueModalOpen(false); setSelectedUserId(''); setSelectedTypeId(''); setIssuedAt(''); setValidityExtension(null); setHours(null) }
     catch (err) { toast.error(getErrorMessage(err)) }
   }
 

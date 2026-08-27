@@ -74,7 +74,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       } else if (role === 'teacher') {
         navigate('/courses')
       } else {
-        navigate('/dashboard')
+        navigate('/certificates')
       }
     },
     [navigate],

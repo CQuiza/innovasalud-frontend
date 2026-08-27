@@ -5,6 +5,7 @@ import Input from '../atoms/Input'
 import { useBatchIssueCertificates } from '../../hooks/useCertificates'
 import { toast } from 'sonner'
 import { getErrorMessage } from '../../lib/error'
+import { toLocalIsoDate } from '../../lib/dates'
 import type { CertificateType } from '../../types'
 
 interface Props {
@@ -84,7 +85,7 @@ export default function BatchCertificateModal({ open, onClose, userId, userName,
       const result = await batchIssue.mutateAsync({
         user_id: userId,
         certificate_type_ids: Array.from(selectedIds),
-        issued_at: issuedAt || undefined,
+        issued_at: issuedAt ? toLocalIsoDate(issuedAt) : undefined,
         validity_extension: selectedIds.size === 1 ? (validityExtension ?? undefined) : undefined,
         hours: selectedIds.size === 1 ? (hours ?? undefined) : undefined,
       })

@@ -5,6 +5,7 @@ import Input from '../atoms/Input'
 import { useRenewCertificate } from '../../hooks/useCertificates'
 import { toast } from 'sonner'
 import { getErrorMessage } from '../../lib/error'
+import { toLocalIsoDate } from '../../lib/dates'
 import type { Certificate } from '../../types'
 
 interface Props {
@@ -33,7 +34,7 @@ export default function RenewCertificateModal({ open, onClose, certificate }: Pr
     e.preventDefault()
     try {
       await renew.mutateAsync({
-        issued_at: issuedAt || undefined,
+        issued_at: issuedAt ? toLocalIsoDate(issuedAt) : undefined,
         validity_extension: validityExtension ?? undefined,
         hours: hours ?? undefined,
       })

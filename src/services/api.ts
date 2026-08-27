@@ -1,4 +1,5 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios'
+import { toast } from 'sonner'
 import { config } from '../config'
 import { authService, getRefreshToken, setRefreshToken } from './authService'
 
@@ -32,6 +33,7 @@ api.interceptors.response.use(
 
     if (!getRefreshToken()) {
       localStorage.removeItem('user')
+      toast.info('Tu sesión ha expirado. Por favor inicia sesión de nuevo.')
       window.location.href = '/login'
       return Promise.reject(error)
     }
@@ -56,6 +58,7 @@ api.interceptors.response.use(
       processQueue(null, refreshError)
       setRefreshToken(null)
       localStorage.removeItem('user')
+      toast.info('Tu sesión ha expirado. Por favor inicia sesión de nuevo.')
       window.location.href = '/login'
       return Promise.reject(refreshError)
     } finally {

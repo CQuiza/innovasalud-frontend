@@ -44,14 +44,26 @@ export default function UserFormModal({ isOpen, onClose, user, roleOptions, isSa
     await onSubmit(payload, mode)
   }
 
+  // Contraseña válida desde 8 caracteres: los caracteres del input (los
+  // asteriscos/bullets) se pintan en verde como confirmación visual
+  const passwordValid = form.password.length >= 8
+
   return (
     <Modal open={isOpen} onClose={onClose} title={user ? 'Editar usuario' : 'Nuevo usuario'}>
       <form onSubmit={handleSubmit} style={{ maxHeight: '70vh', overflowY: 'auto' }}>
-        <Input label="Email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
-        <Input label={user ? 'Contraseña (dejar vacío para mantener)' : 'Contraseña'} type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required={!user} />
+        <Input label="Email (apellido.id@gmail.com)*" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
+        <Input
+          label={user ? 'Contraseña (dejar vacío para mantener)' : 'Contraseña*'}
+          type="password"
+          minLength={8}
+          className={passwordValid ? 'text-success fw-bold' : ''}
+          value={form.password}
+          onChange={(e) => setForm({ ...form, password: e.target.value })}
+          required={!user}
+        />
         <div className="row g-3">
-          <div className="col-6"><Input label="Nombre" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></div>
-          <div className="col-6"><Input label="Primer apellido" value={form.first_last_name} onChange={(e) => setForm({ ...form, first_last_name: e.target.value })} /></div>
+          <div className="col-6"><Input label="Nombre*" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></div>
+          <div className="col-6"><Input label="Primer apellido*" value={form.first_last_name} onChange={(e) => setForm({ ...form, first_last_name: e.target.value })} /></div>
         </div>
         <Input label="Segundo apellido" value={form.second_last_name} onChange={(e) => setForm({ ...form, second_last_name: e.target.value })} />
         <div className="row g-3">
@@ -69,7 +81,7 @@ export default function UserFormModal({ isOpen, onClose, user, roleOptions, isSa
           </div>
         </div>
         <div className="row g-3">
-          <div className="col-6"><Input label="Número ID" value={form.identity_number} onChange={(e) => setForm({ ...form, identity_number: e.target.value })} required /></div>
+          <div className="col-6"><Input label="Número ID*" value={form.identity_number} onChange={(e) => setForm({ ...form, identity_number: e.target.value })} required /></div>
           <div className="col-6"><Input label="Teléfono (opcional)" value={form.phone_number} onChange={(e) => setForm({ ...form, phone_number: e.target.value })} /></div>
         </div>
         <div className="form-check mb-3">
