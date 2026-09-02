@@ -38,6 +38,8 @@ export interface AnswerResult {
   selected_option_id: number
   is_correct: boolean
   correct_option_id: number | null
+  selected_option_text?: string | null
+  correct_option_text?: string | null
 }
 
 export interface AttemptResult {

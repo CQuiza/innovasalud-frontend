@@ -53,6 +53,16 @@ export default function AssessmentResult({ result, passingScore, onRetry, onBack
               <small className={ans.is_correct ? 'text-success' : 'text-danger'}>
                 {ans.is_correct ? 'Correcta' : 'Incorrecta'}
               </small>
+              {!ans.is_correct && (
+                <div className="mt-1">
+                  {ans.selected_option_text && (
+                    <small className="d-block text-muted">Tu respuesta: {ans.selected_option_text}</small>
+                  )}
+                  {ans.correct_option_text && (
+                    <small className="d-block text-success fw-medium">Respuesta correcta: {ans.correct_option_text}</small>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         ))}

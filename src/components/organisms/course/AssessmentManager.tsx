@@ -7,6 +7,7 @@ import Button from '../../atoms/Button'
 import Input from '../../atoms/Input'
 import { getErrorMessage } from '../../../lib/error'
 import { FaPlus, FaTrashAlt, FaPencilAlt } from 'react-icons/fa'
+import type { AssessmentOptionWithCorrect } from '../../../types/moduleAssessment'
 
 interface AssessmentManagerProps {
   moduleId: number | null
@@ -41,7 +42,10 @@ export default function AssessmentManager({ moduleId, onClose }: AssessmentManag
           question_type: q.question_type as 'multiple_choice' | 'true_false',
           points: q.points,
           order_index: q.order_index,
-          options: q.options.map((o) => ({ option_text: o.option_text, is_correct: false })),
+          options: q.options.map((o) => ({
+            option_text: o.option_text,
+            is_correct: (o as AssessmentOptionWithCorrect).is_correct ?? false,
+          })),
         }))
       )
     } else {
