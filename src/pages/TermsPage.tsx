@@ -16,7 +16,7 @@ export default function TermsPage() {
               <span className="material-symbols-outlined">gavel</span> Legalidad
             </h2>
             <p>
-              El día 18 de abril de 2023 se creó <strong className="font-bold text-bar-900">INNOVASALUD COLOMBIA S.A.S.</strong> con el número de matrícula{' '}
+              El día 18 de septiembre de 2024 se creó <strong className="font-bold text-bar-900">INNOVASALUD COLOMBIA S.A.S.</strong> con el número de matrícula{' '}
               <span className="inline-block bg-bar-900 text-white font-bold text-base px-3 py-1 rounded-lg">406790</span>{' '}
               en la Cámara de Comercio de Neiva como establecimiento de comercio siendo una sociedad comercial con las actividades 8551: Formación para el trabajo y 7020: Actividades de consultoría de gestión.
             </p>
@@ -26,7 +26,7 @@ export default function TermsPage() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-bar-900 text-white px-6 py-3 rounded-xl font-semibold hover:bg-bar-700 transition-colors"
             >
-              Confirmar esta infromación
+              Confirmar esta información
               <span className="material-symbols-outlined">open_in_new</span>
             </a>
           </div>
