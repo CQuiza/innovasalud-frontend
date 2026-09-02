@@ -44,6 +44,7 @@ export default function HomePage() {
           <div className="hidden md:flex items-center gap-8">
             <Link to="/search" className="text-sm font-medium tracking-wide text-neutral-600 hover:text-bar-900 transition-colors">Verificar certificado</Link>
             <Link to="/catalog" className="text-sm font-medium tracking-wide text-neutral-600 hover:text-bar-900 transition-colors">Catálogo</Link>
+            <Link to="/terms" className="text-sm font-medium tracking-wide text-neutral-600 hover:text-bar-900 transition-colors">Legalidad</Link>
             <Link to="/login" className="bg-bar-900 text-white px-6 py-2.5 rounded-full text-sm font-medium tracking-wide hover:opacity-90 transition-all scale-95 active:scale-90">
               Iniciar sesión
             </Link>
@@ -56,6 +57,7 @@ export default function HomePage() {
           <div className="md:hidden border-t border-neutral-200/30 bg-white px-4 py-6 space-y-4">
             <Link to="/search" onClick={() => setMobileMenuOpen(false)} className="block text-sm font-medium text-neutral-600 hover:text-bar-900">Verificar certificado</Link>
             <Link to="/catalog" onClick={() => setMobileMenuOpen(false)} className="block text-sm font-medium text-neutral-600 hover:text-bar-900">Catálogo</Link>
+            <Link to="/terms" onClick={() => setMobileMenuOpen(false)} className="block text-sm font-medium text-neutral-600 hover:text-bar-900">Legalidad</Link>
             <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="block text-center bg-bar-900 text-white px-6 py-2.5 rounded-full text-sm font-medium">Iniciar sesión</Link>
           </div>
         )}

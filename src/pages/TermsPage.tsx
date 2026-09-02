@@ -10,8 +10,27 @@ export default function TermsPage() {
         </nav>
       </header>
       <main className="max-w-3xl mx-auto px-4 md:px-10 py-20">
-        <h1 className="text-3xl font-semibold text-bar-900 tracking-tight mb-8">Términos de Servicio</h1>
         <div className="space-y-6 text-neutral-600 leading-relaxed">
+          <div className="bg-bar-500/5 border-l-4 border-bar-500 rounded-2xl p-8 space-y-5">
+            <h2 className="text-xl font-semibold text-bar-900 flex items-center gap-2">
+              <span className="material-symbols-outlined">gavel</span> Legalidad
+            </h2>
+            <p>
+              El día 18 de abril de 2023 se creó <strong className="font-bold text-bar-900">INNOVASALUD COLOMBIA S.A.S.</strong> con el número de matrícula{' '}
+              <span className="inline-block bg-bar-900 text-white font-bold text-base px-3 py-1 rounded-lg">406790</span>{' '}
+              en la Cámara de Comercio de Neiva como establecimiento de comercio siendo una sociedad comercial con las actividades 8551: Formación para el trabajo y 7020: Actividades de consultoría de gestión.
+            </p>
+            <a
+              href="https://www.rues.org.co/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-bar-900 text-white px-6 py-3 rounded-xl font-semibold hover:bg-bar-700 transition-colors"
+            >
+              Confirmar esta infromación
+              <span className="material-symbols-outlined">open_in_new</span>
+            </a>
+          </div>
+          <h1 className="text-3xl font-semibold text-bar-900 tracking-tight mb-8">Términos de Servicio</h1>
           <p>Al acceder y utilizar la plataforma InnovaSalud, aceptas cumplir con estos términos de servicio. Si no estás de acuerdo, no utilices nuestros servicios.</p>
           <h2 className="text-xl font-semibold text-bar-900">Uso de la Plataforma</h2>
           <p>La plataforma está diseñada para la formación virtual en el sector salud. Los usuarios deben proporcionar información veraz y mantener la confidencialidad de sus credenciales.</p>
