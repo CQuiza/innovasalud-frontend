@@ -1,4 +1,5 @@
 import { config } from '../config'
+import { filenameFromContentDisposition } from './contentDisposition'
 
 export async function downloadTaskFile(taskId: number): Promise<void> {
   try {
@@ -8,8 +9,7 @@ export async function downloadTaskFile(taskId: number): Promise<void> {
     if (!res.ok) throw new Error()
     const blob = await res.blob()
     const disposition = res.headers.get('content-disposition')
-    const match = disposition?.match(/filename="(.+)"/)
-    const filename = match ? match[1] : `task-${taskId}`
+    const filename = filenameFromContentDisposition(disposition, `task-${taskId}`)
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url

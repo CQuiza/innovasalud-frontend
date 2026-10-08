@@ -1,4 +1,5 @@
 import { config } from '../config'
+import { filenameFromContentDisposition } from '../lib/contentDisposition'
 import api from './api'
 import type { TaskSubmission, TaskSubmissionWithUser } from '../types'
 
@@ -25,18 +26,10 @@ export const taskSubmissionService = {
     if (!res.ok) throw new Error('Error al descargar el archivo')
     const blob = await res.blob()
     const disposition = res.headers.get('content-disposition')
-    let filename = preferredName || `submission-${submissionId}.pdf`
-    if (disposition) {
-      const rfcMatch = disposition.match(/filename\*=UTF-8''([^;]+)/)
-      if (rfcMatch) {
-        filename = decodeURIComponent(rfcMatch[1])
-      } else {
-        const fallbackMatch = disposition.match(/filename="?(.+?)"?\s*(?:;|$)/)
-        if (fallbackMatch) {
-          filename = fallbackMatch[1]
-        }
-      }
-    }
+    const filename = filenameFromContentDisposition(
+      disposition,
+      preferredName || `submission-${submissionId}.pdf`,
+    )
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
